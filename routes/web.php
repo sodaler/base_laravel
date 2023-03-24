@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MyPlaceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return '11111';
 });
+
+/**
+ * Первый route
+ * принимает url, анонимную ф-ю в качестве callback
+ */
+Route::get('/first', function () {
+    return 'this is my page';
+});
+
+
+/**
+ * route, который принимает controller
+ */
+Route::get('/place', [MyPlaceController::class, 'index']);
