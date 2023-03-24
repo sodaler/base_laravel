@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\MyPlaceController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,4 +30,4 @@ Route::get('/first', function () {
 /**
  * route, который принимает controller
  */
-Route::get('/place', [MyPlaceController::class, 'index']);
+Route::get('/place', [PostController::class, 'index']);
