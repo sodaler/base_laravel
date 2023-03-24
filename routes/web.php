@@ -30,4 +30,4 @@ Route::get('/first', function () {
 /**
  * route, который принимает controller
  */
-Route::get('/place', [PostController::class, 'index']);
+Route::get('/posts', [PostController::class, 'index']);

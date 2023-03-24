@@ -15,6 +15,16 @@ class PostController extends Controller
     {
         // Вытягиваем первый пост из таблицы
         $post = Post::find(1);
-        dd($post->title);
+        // Вытягиваем все посты
+        $posts_all = Post::all();
+        // Выборка публикованных постов
+        $posts_where = Post::where('is_published', 1)->get();
+        // Выборка первого публикованного поста
+
+        foreach ($posts_all as $post) {
+            dump($post->title);
+        }
+
+        dd('end');
     }
 }
