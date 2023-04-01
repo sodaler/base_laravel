@@ -98,14 +98,6 @@ class PostController extends Controller
 
     public function updateOrCreate()
     {
-        $anotherPost = [
-            'title' => 'upd_post',
-            'content' => 'upd_content',
-            'image' => 'upd_img',
-            'likes' => 3211,
-            'is_published' => '0',
-        ];
-
         $post = Post::updateOrCreate([
             'title' => 'upd_post'
         ], [
