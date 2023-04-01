@@ -68,4 +68,16 @@ class PostController extends Controller
 
         dd('updated');
     }
+
+    public function delete()
+    {
+        // Удаление
+        $post = Post::find(6);
+        $post->delete();
+
+        // Восстановление после удаления в таблице с Soft delete
+//        $post = Post::withTrashed()->find(6);
+//        $post->restore();
+        dd('deleted');
+    }
 }
