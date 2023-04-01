@@ -13,6 +13,7 @@ class PostController extends Controller
 {
     public function index()
     {
+        /*
         // Вытягиваем первый пост из таблицы
         $post = Post::find(1);
         // Вытягиваем все посты
@@ -24,8 +25,11 @@ class PostController extends Controller
         foreach ($posts_all as $post) {
             dump($post->title);
         }
+        */
 
-        dd('end');
+        $posts = Post::all();
+
+        return view('posts', compact('posts'));
     }
 
     public function create()
