@@ -9,4 +9,6 @@ class Post extends Model
 {
     use HasFactory;
     protected $table = 'posts';
+    // отключаем защиту на добавление записи в базу
+    protected $guarded = [];
 }
