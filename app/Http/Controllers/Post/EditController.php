@@ -10,7 +10,7 @@ use App\Models\Tag;
 /**
  * Однометодный контроллер
  */
-class EditController extends Controller
+class EditController extends BaseController
 {
     // Вызывается при вызове объекта, как функцию
     public function __invoke(Post $post)

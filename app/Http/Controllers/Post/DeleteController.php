@@ -8,7 +8,7 @@ use App\Models\Post;
 /**
  * Однометодный контроллер
  */
-class DeleteController extends Controller
+class DeleteController extends BaseController
 {
     // Вызывается при вызове объекта, как функцию
     public function __invoke(Post $post)

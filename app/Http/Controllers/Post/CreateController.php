@@ -10,7 +10,7 @@ use App\Models\Tag;
 /**
  * Однометодный контроллер
  */
-class CreateController extends Controller
+class CreateController extends BaseController
 {
     // Вызывается при вызове объекта, как функцию
     public function __invoke()

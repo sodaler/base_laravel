@@ -8,7 +8,7 @@ use App\Models\Post;
 /**
  * Однометодный контроллер
  */
-class ShowController extends Controller
+class ShowController extends BaseController
 {
     // Вызывается при вызове объекта, как функцию
     public function __invoke(Post $post)

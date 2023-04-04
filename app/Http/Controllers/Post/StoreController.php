@@ -3,28 +3,19 @@
 namespace App\Http\Controllers\Post;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Post\StoreRequest;
 use App\Models\Post;
 
 /**
  * Однометодный контроллер
  */
-class StoreController extends Controller
+class StoreController extends BaseController
 {
     // Вызывается при вызове объекта, как функцию
-    public function __invoke()
+    public function __invoke(StoreRequest $request)
     {
-        $data = request()->validate([
-            'title' => 'required|string',
-            'content' => 'required|string',
-            'image' => 'string',
-            'category_id' => 'int',
-            'tags' => '',
-        ]);
-        $tags = $data['tags'];
-        unset($data['tags']);
-
-        $post = Post::create($data);
-        $post->tags()->attach($tags);
+        $data = $request->validated();
+        $this->service->store($data);
 
         return redirect()->route('post.index');
     }

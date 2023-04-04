@@ -8,7 +8,7 @@ use App\Models\Post;
 /**
  * Однометодный контроллер
  */
-class IndexController extends Controller
+class IndexController extends BaseController
 {
     // Вызывается при вызове объекта, как функцию
     public function __invoke()
