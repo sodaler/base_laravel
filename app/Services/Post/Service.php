@@ -13,6 +13,8 @@ class Service
 
         $post = Post::create($data);
         $post->tags()->attach($tags);
+
+        return $post;
     }
 
     public function update($post, $data)
@@ -22,5 +24,8 @@ class Service
 
         $post->updateOrFail($data);
         $post->tags()->sync($tags);
+
+        // Принудительное обновление в БД
+        return $post->fresh();
     }
 }
