@@ -17,10 +17,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return '11111';
-});
-
 /**
  * Первый route
  * принимает url, анонимную ф-ю в качестве callback
@@ -60,7 +56,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Post'], function() {
 /**
  * admin routes
  */
-Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin'], function() {
+Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 'middleware' => 'admin'], function() {
     Route::group(['namespace' => 'Post'], function() {
         Route::get('/post', 'IndexController')->name('admin.post.index');
         Route::get('/post/create', 'CreateController')->name('admin.post.create');
@@ -75,4 +71,4 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin'],
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
