@@ -15,6 +15,8 @@ class IndexController extends BaseController
     // Вызывается при вызове объекта, как функцию
     public function __invoke(FilterRequest $request)
     {
+        // policy example
+//        $this->authorize('view', auth()->user());
         $data = $request->validated();
 
         $filter = app()->make(PostFilter::class, ['queryParams' => array_filter($data)]);
