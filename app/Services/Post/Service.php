@@ -2,30 +2,106 @@
 
 namespace App\Services\Post;
 
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
+use Illuminate\Support\Facades\DB;
 
 class Service
 {
     public function store($data)
     {
-        $tags = $data['tags'];
-        unset($data['tags']);
+        // Транзакция
+        try {
+            DB::beginTransaction();
 
-        $post = Post::create($data);
-        $post->tags()->attach($tags);
+            $tags = $data['tags'];
+            $category = $data['category'];
+            unset($data['tags']);
+
+            $data['category_id'] = $this->getCategoryId($category);
+            $tagIds = $this->getTagIds($tags);
+
+            $post = Post::create($data);
+            $post->tags()->attach($tagIds);
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return $exception->getMessage();
+        }
 
         return $post;
     }
 
     public function update($post, $data)
     {
-        $tags = $data['tags'];
-        unset($data['tags']);
+        // Транзакция
+        try {
+            DB::beginTransaction();
+            $tags = $data['tags'];
+            $category = $data['category'];
+            unset($data['tags'], $data['category']);
 
-        $post->updateOrFail($data);
-        $post->tags()->sync($tags);
+            $tagIds = $this->getTagIdsWithUpdate($tags);
+            $data['category_id'] = $this->getCategoryIdWithUpdate($category);
+
+            $post->update($data);
+            $post->tags()->sync($tagIds);
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return $exception->getMessage();
+        }
 
         // Принудительное обновление в БД
         return $post->fresh();
+    }
+
+    private function getCategoryId($item)
+    {
+        $category = !isset($item['id']) ? Category::create($item) : Category::find($item['id']);
+
+        return $category->id;
+    }
+
+    private function getCategoryIdWithUpdate($item)
+    {
+        if(!isset($item['id'])) {
+            $category = Category::create($item);
+        } else {
+            $category = Category::find($item['id']);
+            $category->update($item);
+            $category = $category->fresh();
+        }
+        return $category->id;
+    }
+
+    private function getTagIds($tags)
+    {
+        $tagIds = [];
+        foreach ($tags as $tag) {
+            $tag = !isset($tag['id']) ? Tag::create($tag) : Tag::find($tag['id']);
+            $tagIds[] = $tag->id;
+        }
+
+        return $tagIds;
+    }
+
+    private function getTagIdsWithUpdate($tags)
+    {
+        $tagIds = [];
+        foreach ($tags as $tag) {
+            if (!isset($tag['id'])) {
+                $tagId = Tag::create($tag);
+            } else {
+                $tagCurrent = Tag::find($tag['id']);
+                $tagCurrent->update($tag);
+                $tagId = $tagCurrent->fresh();
+            }
+            $tagIds[] = $tagId->id;
+        }
+        return $tagIds;
     }
 }

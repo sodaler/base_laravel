@@ -58,8 +58,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Post'], function() {
  */
 Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 'middleware' => 'admin'], function() {
     Route::group(['namespace' => 'Post'], function() {
-        Route::get('/post', 'IndexController')->name('admin.post.index');
-        Route::get('/post/create', 'CreateController')->name('admin.post.create');
+        Route::get('/posts', 'IndexController')->name('admin.post.index');
+        Route::get('/posts/create', 'CreateController')->name('admin.post.create');
         Route::post('/posts', 'StoreController')->name('admin.post.store');
         Route::get('/posts/{post}', 'ShowController')->name('admin.post.show');
         Route::get('/posts/{post}/edit', 'EditController')->name('admin.post.edit');
