@@ -72,3 +72,5 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'prefix' => 'admin', 
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('excel_import/', [\App\Http\Controllers\Excel\ExportController::class, 'export']);
